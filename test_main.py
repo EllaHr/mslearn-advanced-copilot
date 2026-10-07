@@ -13,3 +13,11 @@ def test_countries():
     response = client.get("/countries")
     assert response.status_code == 200
     assert sorted(response.json()) == ["England", "France", "Germany", "Italy", "Peru", "Portugal", "Spain"]
+
+
+def test_spain_cities_only_includes_seville() -> None:
+    """Verify Spain lists Seville and excludes cities not in the API."""
+    response = client.get("/countries/Spain/cities")
+
+    assert response.status_code == 200
+    assert response.json() == ["Seville"]
